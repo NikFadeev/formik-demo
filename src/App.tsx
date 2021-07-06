@@ -1,24 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+
+type Values = {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Signup</h1>
+      <Formik initialValues={{
+        firstName: '',
+        lastName: '',
+        email: ''
+      }}
+        onSubmit={(values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+          console.log(JSON.stringify(values, null, 2))
+          console.log(values.email);
+      }}>
+        <Form>
+          <label htmlFor="firstName">First Name</label>
+          <Field id="firstName" name="firstName" placeholder="John"></Field>
+
+          <label htmlFor="lastName">First Name</label>
+          <Field id="lastName" name="lastName" placeholder="Doe"></Field>
+
+          <label htmlFor="email"></label>
+          <Field id="email" name="email" placeholder="john@acme.com" type="email" />
+          
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
     </div>
   );
 }
